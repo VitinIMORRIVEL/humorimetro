@@ -88,7 +88,31 @@
     </section>
 
     <p class="status" aria-live="polite"></p>
+
+    <!-- Envio do humor escolhido -->
+    <div class="envio">
+      <input type="text" id="nome" class="campo-nome" placeholder="Seu nome (opcional)" maxlength="40" autocomplete="off">
+      <button type="button" id="enviar" class="botao botao-enviar" disabled>Enviar</button>
+    </div>
+    <p id="aviso" class="aviso" role="status" aria-live="polite"></p>
+
+    <!-- Resumo dos registros salvos (JSON no navegador) -->
+    <section class="registros" aria-label="Registros da turma">
+      <h2>Registros da turma <span id="total" class="total">0</span></h2>
+      <ul class="contagem">
+        <li class="amarelo">😊 BEM <strong id="c-bem">0</strong></li>
+        <li class="rosa">😐 OK <strong id="c-ok">0</strong></li>
+        <li class="rosa">😢 TRISTE <strong id="c-triste">0</strong></li>
+        <li class="amarelo">😩 CANSADO <strong id="c-cansado">0</strong></li>
+      </ul>
+      <div class="acoes">
+        <button type="button" id="baixar" class="botao botao-sec">⬇ Baixar JSON</button>
+        <button type="button" id="limpar" class="botao botao-sec">🗑 Limpar registros</button>
+      </div>
+    </section>
   </main>
+
+  <script src="script.js"></script>
 
 </body>
 </html>

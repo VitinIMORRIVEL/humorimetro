@@ -211,3 +211,111 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .ponteiro, .carinha, .quadrante { transition: none; }
 }
+
+/* ===== Envio ===== */
+.envio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 8px 8px 0;
+}
+
+.campo-nome {
+  flex: 1 1 200px;
+  max-width: 320px;
+  font: inherit;
+  font-size: 1.3rem;
+  padding: 8px 14px;
+  border: 2px solid var(--contorno);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.botao {
+  font: inherit;
+  cursor: pointer;
+  border: 2px solid var(--contorno);
+  border-radius: 10px;
+  transition: transform .15s, filter .15s, opacity .2s;
+}
+.botao:hover:not(:disabled)  { transform: translateY(-2px); filter: brightness(1.05); }
+.botao:active:not(:disabled) { transform: translateY(1px); }
+.botao:focus-visible { outline: 3px dashed var(--contorno); outline-offset: 3px; }
+
+.botao-enviar {
+  font-size: 1.5rem;
+  padding: 6px 30px;
+  background: var(--massinha);
+  color: #fff;
+  box-shadow: 0 3px 0 #a8360c;
+}
+.botao-enviar:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+
+.aviso {
+  text-align: center;
+  font-size: 1.3rem;
+  min-height: 1.8em;
+  padding-top: 6px;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.aviso.visivel { opacity: 1; }
+
+/* ===== Registros ===== */
+.registros {
+  border-top: 2px dashed #ccc;
+  margin-top: 6px;
+  padding: 12px 8px 6px;
+  text-align: center;
+}
+
+.registros h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.total {
+  display: inline-block;
+  min-width: 1.8em;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--azul);
+  border: 2px solid var(--contorno);
+}
+
+.contagem {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.contagem li {
+  padding: 8px 4px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contagem strong { font-size: 1.8rem; line-height: 1.1; }
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.botao-sec {
+  font-size: 1.1rem;
+  padding: 6px 16px;
+  background: #fff;
+}
+
+@media (max-width: 520px) {
+  .contagem { grid-template-columns: repeat(2, 1fr); }
+}
