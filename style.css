@@ -1,0 +1,213 @@
+/* ===== Cores da maquete ===== */
+:root {
+  --azul: #a9d4ef;
+  --amarelo: #f7ec97;
+  --rosa: #f0a7c3;
+  --rosto: #f8eea3;
+  --contorno: #1f1f1f;
+  --contorno-rosa: #6b2340;
+  --massinha: #f2541b;
+  --mesa: #e6e6e6;
+  --isopor: #fbfbfb;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: var(--mesa);
+  font-family: "Gochi Hand", "Comic Sans MS", cursive;
+}
+
+/* ===== Placa (o isopor) ===== */
+.placa {
+  width: min(900px, 100%);
+  background: var(--isopor);
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+}
+
+.escolha {               /* radios escondidos, mas acessíveis pelo teclado */
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===== Letras vazadas, como as desenhadas à caneta ===== */
+.titulo h1,
+.palavra {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--contorno);
+  letter-spacing: .08em;
+  line-height: 1;
+}
+
+.titulo {
+  background: var(--azul);
+  text-align: center;
+  padding: 14px 8px 10px;
+}
+
+.titulo h1 {
+  font-size: clamp(2.4rem, 9vw, 5.5rem);
+  font-weight: 400;
+}
+
+/* ===== Quadro 2x2 ===== */
+.quadro {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.quadrante {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(18px, 5vw, 48px) 12px clamp(14px, 3vw, 26px);
+  min-height: clamp(220px, 40vw, 360px);
+  cursor: pointer;
+  transition: filter .25s, transform .25s, box-shadow .25s;
+}
+
+.amarelo { background: var(--amarelo); }
+.rosa    { background: var(--rosa); }
+
+.quadrante:hover { filter: brightness(1.04); }
+
+.palavra {
+  font-size: clamp(2rem, 7vw, 4.2rem);
+}
+
+.q-triste .palavra { -webkit-text-stroke-color: var(--contorno-rosa); }
+
+/* Quadradinho rosa atrás das carinhas de BEM e CANSADO */
+.moldura {
+  background: var(--rosa);
+  padding: clamp(4px, 1vw, 10px);
+  line-height: 0;
+}
+
+/* ===== Carinhas (SVG) ===== */
+.carinha {
+  width: clamp(80px, 18vw, 170px);
+  height: auto;
+  transition: transform .3s;
+}
+
+.rosto    { fill: var(--rosto); }
+.olho     { fill: var(--contorno); }
+.bochecha { fill: #f06a8a; opacity: .75; }
+.lagrima  { fill: none; stroke: var(--contorno); stroke-width: 1.6; }
+.testa    { fill: var(--azul); }
+.boca     { fill: var(--contorno); }
+.traco {
+  fill: none;
+  stroke: var(--contorno);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+.traco.fino { stroke-width: 1.8; }
+
+/* ===== Massinha + ponteiro no centro ===== */
+.massinha {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(36px, 7vw, 60px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 48% 52% 45% 55% / 55% 45% 55% 45%;
+  background: radial-gradient(circle at 35% 30%, #ff8a55, var(--massinha) 55%, #c8400f);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .3);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.ponteiro {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: rotate(0deg) scale(0);
+  transition: transform .6s cubic-bezier(.34, 1.56, .64, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.agulha {
+  position: absolute;
+  left: -5px;
+  bottom: 0;
+  width: 10px;
+  height: clamp(80px, 17vw, 160px);
+  background: var(--massinha);
+  border-radius: 5px 5px 3px 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.agulha::before {               /* ponta da seta */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  transform: translateX(-50%);
+  border: 11px solid transparent;
+  border-bottom: 16px solid var(--massinha);
+  border-top: 0;
+}
+
+/* ===== Estados: o ponteiro gira para o humor escolhido ===== */
+#bem:checked     ~ .quadro .ponteiro { transform: rotate(-50deg)  scale(1); }
+#ok:checked      ~ .quadro .ponteiro { transform: rotate(50deg)   scale(1); }
+#cansado:checked ~ .quadro .ponteiro { transform: rotate(130deg)  scale(1); }
+#triste:checked  ~ .quadro .ponteiro { transform: rotate(-130deg) scale(1); }
+
+#bem:checked     ~ .quadro .q-bem,
+#ok:checked      ~ .quadro .q-ok,
+#triste:checked  ~ .quadro .q-triste,
+#cansado:checked ~ .quadro .q-cansado {
+  box-shadow: inset 0 0 0 5px rgba(0, 0, 0, .55);
+}
+
+#bem:checked     ~ .quadro .q-bem .carinha,
+#ok:checked      ~ .quadro .q-ok .carinha,
+#triste:checked  ~ .quadro .q-triste .carinha,
+#cansado:checked ~ .quadro .q-cansado .carinha {
+  transform: scale(1.1) rotate(-4deg);
+}
+
+/* Foco pelo teclado (Tab + setas) */
+#bem:focus-visible     ~ .quadro .q-bem,
+#ok:focus-visible      ~ .quadro .q-ok,
+#triste:focus-visible  ~ .quadro .q-triste,
+#cansado:focus-visible ~ .quadro .q-cansado {
+  outline: 4px dashed var(--contorno);
+  outline-offset: -10px;
+}
+
+/* ===== Mensagem embaixo ===== */
+.status {
+  text-align: center;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  padding: 12px 8px 4px;
+  color: #333;
+}
+
+.status::after                         { content: "Como você está se sentindo hoje? Toque em um quadrado!"; }
+#bem:checked     ~ .status::after      { content: "Você está BEM! Que ótimo! 😊"; }
+#ok:checked      ~ .status::after      { content: "Você está OK. Um dia tranquilo. 😐"; }
+#triste:checked  ~ .status::after      { content: "Você está TRISTE. Quer conversar com alguém? 💛"; }
+#cansado:checked ~ .status::after      { content: "Você está CANSADO. Respire fundo e descanse um pouco. 😮‍💨"; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ponteiro, .carinha, .quadrante { transition: none; }
+}
