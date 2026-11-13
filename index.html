@@ -98,13 +98,14 @@
 
     <!-- Resumo dos registros salvos (JSON no navegador) -->
     <section class="registros" aria-label="Registros da turma">
-      <h2>Registros da turma <span id="total" class="total">0</span></h2>
+      <h2><span id="titulo-registros">Registros</span> <span id="total" class="total">0</span></h2>
       <ul class="contagem">
         <li class="amarelo">😊 BEM <strong id="c-bem">0</strong></li>
         <li class="rosa">😐 OK <strong id="c-ok">0</strong></li>
         <li class="rosa">😢 TRISTE <strong id="c-triste">0</strong></li>
         <li class="amarelo">😩 CANSADO <strong id="c-cansado">0</strong></li>
       </ul>
+      <p id="fonte" class="fonte"></p>
       <div class="acoes">
         <button type="button" id="baixar" class="botao botao-sec">⬇ Baixar JSON</button>
         <button type="button" id="limpar" class="botao botao-sec">🗑 Limpar registros</button>
@@ -112,6 +113,7 @@
     </section>
   </main>
 
+  <script src="config.js"></script>
   <script src="script.js"></script>
 
 </body>

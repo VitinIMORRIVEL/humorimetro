@@ -5,7 +5,9 @@ Versão digital (HTML + CSS + um pouco de JavaScript) da maquete física do humo
 ## Arquivos
 - `index.html`: estrutura (título, os 4 quadrantes, ponteiro e a "massinha" no centro)
 - `style.css`: cores da maquete, letras vazadas, carinhas, ponteiro, animações, botões e resumo
-- `script.js`: botão Enviar, registros em JSON, contagem, baixar e limpar
+- `script.js`: botão Enviar, registros em JSON, envio para a planilha, contagem, baixar e limpar
+- `config.js`: URL do App da Web do Google Apps Script (vazio = só local)
+- `apps-script/Code.gs`: código para colar no Apps Script da planilha (backend)
 - `maquete.jpg`: foto do modelo físico de referência
 
 ## Como funciona
@@ -23,7 +25,18 @@ Versão digital (HTML + CSS + um pouco de JavaScript) da maquete física do humo
   ```
   `humor` pode ser `bem`, `ok`, `triste` ou `cansado`; `nome` fica `null` quando não é preenchido.
 - **Baixar JSON** gera o arquivo `humorimetro-AAAA-MM-DD.json`. **Limpar registros** apaga tudo (pede confirmação).
-- Limitação: o GitHub Pages é estático, então os dados ficam **só no aparelho/navegador** usado. Para juntar votos de vários celulares, seria preciso um backend (ex.: Firebase ou Google Planilhas via Apps Script).
+- Cada registro local tem também `sincronizado` (true quando já foi para a planilha).
+- O GitHub Pages é estático, então para juntar as respostas de vários aparelhos usamos o **Google Planilhas** (abaixo). Sem `config.js` preenchido, tudo fica só no navegador.
+
+## Planilha Google (guardar respostas de todos)
+1. Crie uma planilha em https://sheets.new
+2. **Extensões → Apps Script**: apague o conteúdo e cole `apps-script/Code.gs`. Salve.
+3. **Implantar → Nova implantação → App da Web**. Executar como: **Eu**. Quem pode acessar: **Qualquer pessoa**. Autorize.
+4. Copie a URL que termina em `/exec` e cole em `config.js` (`window.HUMORIMETRO_URL = "..."`). Faça commit/push.
+- Cada envio vira uma linha na aba **Respostas** (Data/Hora, Humor, Nome, ID). IDs repetidos são ignorados.
+- O GET da URL devolve `{ hoje: {...}, geral: {...} }`; o site mostra a contagem de **hoje** da turma.
+- Sem internet: o envio fica pendente no navegador e é reenviado ao reabrir a página ou ao reconectar.
+- Se alterar o `Code.gs`, use **Implantar → Gerenciar implantações → Editar → Nova versão** (mantém a mesma URL).
 
 ## Publicação
 GitHub Pages: https://vitinimorrivel.github.io/humorimetro/ (branch `main`, raiz). Cada push na `main` atualiza o site.
